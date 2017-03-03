@@ -2,21 +2,22 @@
 #define CHROMOSSOME_H
 
 #include <vector>
+#include "Permutation.h"
 
 class Chromossome
 {
 public:
 	Chromossome();
-	std::vector<int> getGenes();
+	Permutation getGenes();
 	void mutate();
 	void crossover(const Chromossome& other);
 	void computeFitness();
-	void setGenes(std::vector<int> genes);
+	void setGenes(Permutation genes);
 	int getFitness();
 private:
-	std::vector <int> genes;
+	Permutation genes;
 	int fitness;
-	bool fitnessOutdated;
+	bool fitnessIsUpdated;
 };
 
 #endif

@@ -1,43 +1,38 @@
 #include "Chromossome.h"
 
 Chromossome::Chromossome() :
-	fitnessOutdated(true)
+	fitnessIsUpdated(false)
 {}
 
 void Chromossome::mutate()
 {
 	// Mutate procedure
-	this->fitnessOutdated = true;
+	this->fitnessIsUpdated = false;
 }
 
 void Chromossome::crossover(const Chromossome& other)
 {
 	// Crossover procedure
-	this->fitnessOutdated = true;
+	this->fitnessIsUpdated = false;
 }
 
 void Chromossome::computeFitness()
 {
 	this->fitness = 0;
-	for (unsigned i = 1; i < this->genes.size(); i++)
-	{
-		int u = this->genes[i - 1];
-		int v = this->genes[i];
-		// Como pegar a matriz de adjacência???
-	}
 
-	this->fitnessOutdated = false;
+	// Compute procedue
+	this->fitnessIsUpdated = true;
 }
 
-void Chromossome::setGenes(std::vector <int> genes)
+void Chromossome::setGenes(Permutation genes)
 {
 	this->genes = genes;
-	this->fitnessOutdated = true;
+	this->fitnessIsUpdated = false;
 }
 
 int Chromossome::getFitness()
 {
-	if (this->fitnessOutdated == true)
+	if (this->fitnessIsUpdated == false)
 	{
 		computeFitness();
 	}
