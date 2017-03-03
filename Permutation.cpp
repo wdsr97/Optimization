@@ -1,8 +1,8 @@
 #include "Permutation.h"
 
-Permutation::Permutation(unsigned permutationSize)
+Permutation::Permutation(int permutationSize)
 {
-	for (unsigned i = 0; i < permutationSize; i++)
+	for (int i = 0; i < permutationSize; i++)
 	{
 		this->permutation.emplace_back(i);
 		this->inversionTable.emplace_back(0);
@@ -10,6 +10,62 @@ Permutation::Permutation(unsigned permutationSize)
 
 	this->permutationIsUpdated = true;
 	this->inversionTableIsUpdated = true;
+}
+
+void Permutation::updatePermutation()
+{
+
+
+	this->permutationIsUpdated = true;
+}
+
+void Permutation::updateInversionTable()
+{
+	std::vector <int> a = this->permutation;
+	mergeSort(a, 0, a.size() - 1);
+
+	this->inversionTableIsUpdated = true;
+}
+
+void Permutation::mergeSort(std::vector <int>& a, int left, int right)
+{
+	if (left < right)
+	{
+		int mid = (left + right) / 2;
+		mergeSort(a, left, mid);
+		mergeSort(a, mid + 1, right);
+		merge(a, left, right);
+	}
+}
+
+void Permutation::merge(std::vector <int>& a, int left, int right)
+{
+	int intervalSize = right - left + 1;
+	std::vector <int> b(intervalSize);
+	int mid = (left + right) / 2;
+	int i = left;
+	int j = mid + 1;
+
+	for (int k = 0; k < intervalSize; k++)
+	{
+		int ai = (i > mid ? std::numeric_limits <int>::max() : a[i]);
+		int aj = (j > right ? std::numeric_limits <int>::max() : a[j]);
+
+		if (ai < aj)
+		{
+			b[k] = a[i++];
+		}
+		else
+		{
+			b[k] = a[j++];
+			this->inversionTable[b[k]] += mid - i + 1;
+		}
+	}
+
+	for (int i = 0; i < intervalSize; i++)
+	{
+		a[i + left] = b[i];
+	}
 }
 
 std::vector <int> Permutation::getPermutation()
