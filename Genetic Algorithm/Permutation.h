@@ -7,6 +7,7 @@
 class Permutation
 {
 public:
+	Permutation();
 	Permutation(int permutationSize);
 	std::vector <int> getPermutation();
 	void setPermutation(std::vector <int> permutation);

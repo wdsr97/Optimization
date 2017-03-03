@@ -15,7 +15,6 @@ Permutation::Permutation(int permutationSize)
 void Permutation::updatePermutation()
 {
 
-
 	this->permutationIsUpdated = true;
 }
 
