@@ -9,6 +9,7 @@ class GeneticAlgorithm
 public:
 	GeneticAlgorithm(double mutation_rate, unsigned population_size);
 	void newGeneration();
+	int selection();
 	void evaluate();
 private:
 	std::vector <Chromossome> population;
