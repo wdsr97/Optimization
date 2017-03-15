@@ -7,13 +7,28 @@ Permutation::Permutation(int permutationSize)
 		this->permutation.emplace_back(i);
 		this->inversionTable.emplace_back(0);
 	}
-
 	this->permutationIsUpdated = true;
 	this->inversionTableIsUpdated = true;
 }
 
 void Permutation::updatePermutation()
 {
+	// THIS FUNTION IS DESTROYING INVERSION TABLE!!!
+	for (unsigned i = 0; i < this->permutation.size(); i++)
+	{
+		this->permutation[i] = -1;
+	}
+
+	for (unsigned i = 0; i < this->permutation.size(); i++)
+	{
+		int j = 0;
+		while (this->inversionTable[i] || this->inversionTable[i] != -1)
+		{
+			if (this->permutation[j] == -1)
+				this->inversionTable[i]--;
+		}
+		this->permutation[j] = i;
+	}
 
 	this->permutationIsUpdated = true;
 }
@@ -97,4 +112,22 @@ void Permutation::setInversionTable(std::vector <int> inversionTable)
 {
 	this->inversionTable = inversionTable;
 	this->permutationIsUpdated = false;
+}
+
+void Permutation::displayData()
+{
+	std::cout << "\n--------------------";
+	std::cout << "\nPermutation:\n";
+	auto toPrint = this->getPermutation();
+	for (unsigned i = 0; i < toPrint.size(); i++)
+	{
+		std::cout << std::setw(3) << toPrint[i];
+	}
+	std::cout << "\nInversion Table:\n";
+	toPrint = this->getInversionTable();
+	for (unsigned i = 0; i < toPrint.size(); i++)
+	{
+		std::cout << std::setw(3) << toPrint[i];
+	}
+	std::cout << "\n--------------------\n";
 }

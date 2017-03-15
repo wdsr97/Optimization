@@ -4,6 +4,9 @@
 #include <vector>
 #include <limits>
 
+#include <iomanip>
+#include <iostream>
+
 class Permutation
 {
 public:
@@ -13,6 +16,7 @@ public:
 	void setPermutation(std::vector <int> permutation);
 	std::vector <int> getInversionTable();
 	void setInversionTable(std::vector <int> inversionTable);
+	void displayData();
 private:
 	void updatePermutation();
 	void updateInversionTable();
