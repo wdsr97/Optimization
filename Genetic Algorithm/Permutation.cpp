@@ -11,13 +11,41 @@ Permutation::Permutation(int permutationSize)
 	this->inversionTableIsUpdated = true;
 }
 
+std::vector <int> Permutation::getPermutation()
+{
+	if (this->permutationIsUpdated == false)
+	{
+		updatePermutation();
+	}
+
+	return this->permutation;
+}
+
+void Permutation::setPermutation(std::vector <int> permutation)
+{
+	this->permutation = permutation;
+	this->inversionTableIsUpdated = false;
+}
+
+std::vector <int> Permutation::getInversionTable()
+{
+	if (this->inversionTableIsUpdated == false)
+	{
+		updateInversionTable();
+	}
+
+	return this->inversionTable;
+}
+
+void Permutation::setInversionTable(std::vector <int> inversionTable)
+{
+	this->inversionTable = inversionTable;
+	this->permutationIsUpdated = false;
+}
+
 void Permutation::updatePermutation()
 {
-	// THIS FUNTION IS DESTROYING INVERSION TABLE!!!
-	for (unsigned i = 0; i < this->permutation.size(); i++)
-	{
-		this->permutation[i] = -1;
-	}
+	this->permutation.assign(this->inversionTable.size(), -1);
 
 	for (unsigned i = 0; i < this->permutation.size(); i++)
 	{
@@ -35,9 +63,9 @@ void Permutation::updatePermutation()
 
 void Permutation::updateInversionTable()
 {
+	this->inversionTable.assign(this->permutation.size(), 0);
 	std::vector <int> a = this->permutation;
 	mergeSort(a, 0, a.size() - 1);
-
 	this->inversionTableIsUpdated = true;
 }
 
@@ -80,38 +108,6 @@ void Permutation::merge(std::vector <int>& a, int left, int right)
 	{
 		a[i + left] = b[i];
 	}
-}
-
-std::vector <int> Permutation::getPermutation()
-{
-	if (this->permutationIsUpdated == false)
-	{
-		updatePermutation();
-	}
-
-	return this->permutation;
-}
-
-void Permutation::setPermutation(std::vector <int> permutation)
-{
-	this->permutation = permutation;
-	this->inversionTableIsUpdated = false;
-}
-
-std::vector <int> Permutation::getInversionTable()
-{
-	if (this->inversionTableIsUpdated == false)
-	{
-		updateInversionTable();
-	}
-
-	return this->inversionTable;
-}
-
-void Permutation::setInversionTable(std::vector <int> inversionTable)
-{
-	this->inversionTable = inversionTable;
-	this->permutationIsUpdated = false;
 }
 
 void Permutation::displayData()
