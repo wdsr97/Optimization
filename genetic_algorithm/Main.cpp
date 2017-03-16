@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "Permutation.cpp"
+#include "Permutation.h"
 // #include "GeneticAlgorithm.cpp"
 // #include "Chromossome.cpp"
 
@@ -31,29 +31,36 @@ inline namespace utility
 	// }
 }
 
+class Tester
+{
+	static bool testPermutation();
+};
+
+bool Tester::testPermutation()
+{
+    int factorial = 1;
+    for (int n = 1; n < 9; n++)
+    {
+        std::vector <int> a(n);
+        for (int i = 0; i < n; i++) a[i] = i;
+        std::set <std::vector <int> > all;
+        Permutation x(n), y(n);
+
+        do {
+            x.setPermutation(a);
+            y.setInversionTable(x.getInversionTable());
+            if (x.getPermutation() != y.getPermutation()) return 0;
+            all.insert(y.getInversionTable());
+        } while (std::next_permutation(a.begin(), a.end()));
+
+        factorial *= n;
+        if ((int)all.size() != factorial) return 0;
+    }
+    return 1;
+}
+
 int main()
 {
-	int n;
-	cin >> n;
-	std::vector <int> a(n);
-	for (int i = 0; i < n; i++) a[i] = i;
-
-	Permutation foo(n), bar(n);
-	std::set <std::vector <int> > foobar;
-
-	do {
-		foo.setPermutation(a);
-		bar.setInversionTable(foo.getInversionTable());
-		if (foo.getPermutation() != bar.getPermutation())
-		{
-			std::cout << "Error on list:\n";
-			for (auto it : a) std::cout << ' ' << it;
-			std::cout << '\n';
-		}
-		foobar.insert(bar.getInversionTable());
-	} while (std::next_permutation(a.begin(), a.end()));
-
-	std::cout << foobar.size() << '\n';
 
 	return 0;
 }
