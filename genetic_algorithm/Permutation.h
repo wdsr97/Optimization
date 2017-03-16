@@ -1,12 +1,6 @@
 #ifndef PERMUTATION_H
 #define PERMUTATION_H
 
-#include <vector>
-#include <limits>
-
-#include <iomanip>
-#include <iostream>
-
 class Permutation
 {
 public:

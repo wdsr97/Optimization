@@ -1,3 +1,7 @@
+#include <vector>
+#include <limits>
+#include <iomanip>
+#include <iostream>
 #include "Permutation.h"
 
 Permutation::Permutation(int permutationSize)
