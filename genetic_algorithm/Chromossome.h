@@ -1,22 +1,21 @@
 #ifndef CHROMOSSOME_H
 #define CHROMOSSOME_H
 
-#include <vector>
-#include "Permutation.h"
-
 class Chromossome
 {
 public:
 	Chromossome();
+	Chromossome(int);
+	Chromossome(Permutation);
 	Permutation getGenes();
 	void mutate();
 	void crossover(const Chromossome& other);
 	void computeFitness();
 	void setGenes(Permutation genes);
-	int getFitness();
+	double getFitness();
 private:
 	Permutation genes;
-	int fitness;
+	double fitness;
 	bool fitnessIsUpdated;
 };
 

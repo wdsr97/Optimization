@@ -1,7 +1,18 @@
+#include <vector>
+#include "Permutation.h"
 #include "Chromossome.h"
 
 Chromossome::Chromossome() :
 	fitnessIsUpdated(false)
+{}
+
+Chromossome::Chromossome(int genesSize)
+{
+	this->genes = Permutation(genesSize);
+}
+
+Chromossome::Chromossome(Permutation genes) :
+	genes(genes)
 {}
 
 void Chromossome::mutate()
@@ -30,7 +41,7 @@ void Chromossome::setGenes(Permutation genes)
 	this->fitnessIsUpdated = false;
 }
 
-int Chromossome::getFitness()
+double Chromossome::getFitness()
 {
 	if (this->fitnessIsUpdated == false)
 	{
