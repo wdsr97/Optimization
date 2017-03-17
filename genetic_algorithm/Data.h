@@ -4,10 +4,12 @@
 class Data
 {
 public:
-    Data(int** adjacencyMatrix);
-    friend void Chromossome::updateFitness();
+    Data() {}
+    Data(std::vector <std::vector <int> > adjacencyMatrix);
+    // friend void Chromossome::updateFitness();
+    void displayInfo();
 private:
-    int** adjacencyMatrix;
+    std::vector <std::vector <int> > adjacencyMatrix;
 };
 
 #endif

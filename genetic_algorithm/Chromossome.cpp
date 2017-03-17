@@ -10,6 +10,11 @@ Chromossome::Chromossome(int genesSize)
 	this->fitnessIsUpdated = false;
 }
 
+Permutation Chromossome::getGenes()
+{
+	return this->genes;
+}
+
 void Chromossome::setGenes(Permutation genes)
 {
 	this->genes = genes;
@@ -48,8 +53,14 @@ void Chromossome::crossover(const Chromossome& other)
 void Chromossome::updateFitness()
 {
 	this->fitness = 0;
+	const std::vector <int>& permutation = this->genes.getPermutation();
+	for (unsigned i = 1; i < permutation.size(); i++)
+	{
+		int u = permutation[i];
+		int v = permutation[(i + 1) % permutation.size()];
+		// this->fitness += Data::adjacencyMatrix[u][v];
+	}
 
-	// Compute procedue
 	this->fitnessIsUpdated = true;
 }
 
