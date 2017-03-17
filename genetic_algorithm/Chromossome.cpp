@@ -1,9 +1,12 @@
 #include <vector>
+#include <iostream>
+#include "Utility.h"
 #include "Permutation.h"
 #include "Chromossome.h"
 
 Chromossome::Chromossome()
 {
+	this->genes = Permutation(1);
 	this->fitnessIsUpdated = false;
 }
 
@@ -22,12 +25,12 @@ Chromossome::Chromossome(Permutation genes)
 void Chromossome::mutate()
 {
 	auto inversionTable = this->genes.getInversionTable();
-	int mutationCalls = random(inversionTable.size()); // why?
+	int mutationCalls = Utility::randomIndex(inversionTable.size()); // why?
 	for (int i = 0; i < mutationCalls; i++)
 	{
-		int index = random(inversionTable.size() - 1);
+		int index = Utility::randomIndex(inversionTable.size() - 1);
 		int upperBound = inversionTable.size() - index;
-		inversionTable[index] = random(upperBound);
+		inversionTable[index] = Utility::randomIndex(upperBound);
 	}
 
 	this->genes.setInversionTable(inversionTable);
@@ -40,7 +43,7 @@ void Chromossome::crossover(const Chromossome& other)
 	this->fitnessIsUpdated = false;
 }
 
-void Chromossome::computeFitness()
+void Chromossome::updateFitness()
 {
 	this->fitness = 0;
 
@@ -58,8 +61,17 @@ double Chromossome::getFitness()
 {
 	if (this->fitnessIsUpdated == false)
 	{
-		computeFitness();
+		updateFitness();
 	}
 
 	return this->fitness;
+}
+
+void Chromossome::displayData()
+{
+	std::cout << "\n--------------------";
+	std::cout << "\nGenes:\n";
+	this->genes.displayData();
+	std::cout << this->getFitness() << std::endl;
+	std::cout << "\n--------------------\n";
 }

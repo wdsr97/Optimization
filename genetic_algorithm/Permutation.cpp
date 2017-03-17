@@ -4,6 +4,12 @@
 #include <iostream>
 #include "Permutation.h"
 
+Permutation::Permutation()
+{
+	this->permutationIsUpdated = false;
+	this->inversionTableIsUpdated = false;
+}
+
 Permutation::Permutation(int permutationSize)
 {
 	for (int i = 0; i < permutationSize; i++)

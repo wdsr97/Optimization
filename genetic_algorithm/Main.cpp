@@ -1,9 +1,8 @@
 #include <bits/stdc++.h>
-using namespace std;
 #include "Utility.h"
 #include "Permutation.h"
+#include "Chromossome.h"
 // #include "GeneticAlgorithm.cpp"
-// #include "Chromossome.cpp"
 
 class Tester
 {

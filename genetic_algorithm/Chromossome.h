@@ -5,14 +5,15 @@ class Chromossome
 {
 public:
 	Chromossome();
-	Chromossome(int);
-	Chromossome(Permutation);
+	Chromossome(int genesSize);
+	Chromossome(Permutation genes);
 	Permutation getGenes();
-	void mutate();
-	void crossover(const Chromossome& other);
-	void computeFitness();
 	void setGenes(Permutation genes);
 	double getFitness();
+	void mutate();
+	void crossover(const Chromossome& other);
+	void updateFitness();
+	void displayData();
 private:
 	Permutation genes;
 	double fitness;
