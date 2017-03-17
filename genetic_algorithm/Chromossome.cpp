@@ -10,6 +10,20 @@ Chromossome::Chromossome(int genesSize)
 	this->fitnessIsUpdated = false;
 }
 
+void Chromossome::setGenes(Permutation genes)
+{
+	this->genes = genes;
+	this->fitnessIsUpdated = false;
+}
+
+double Chromossome::getFitness()
+{
+	if (this->fitnessIsUpdated == false)
+		updateFitness();
+
+	return this->fitness;
+}
+
 void Chromossome::mutate()
 {
 	auto inversionTable = this->genes.getInversionTable();
@@ -39,27 +53,11 @@ void Chromossome::updateFitness()
 	this->fitnessIsUpdated = true;
 }
 
-void Chromossome::setGenes(Permutation genes)
-{
-	this->genes = genes;
-	this->fitnessIsUpdated = false;
-}
-
-double Chromossome::getFitness()
-{
-	if (this->fitnessIsUpdated == false)
-	{
-		updateFitness();
-	}
-
-	return this->fitness;
-}
-
 void Chromossome::displayData()
 {
-	std::cout << "\n--------------------";
-	std::cout << "\nGenes:\n";
+	// std::cout << "\n--------------------";
+	std::cout << "\nGenes:";
 	this->genes.displayData();
-	std::cout << this->getFitness() << std::endl;
-	std::cout << "\n--------------------\n";
+	// std::cout << this->getFitness() << std::endl;
+	// std::cout << "\n--------------------\n";
 }

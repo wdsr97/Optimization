@@ -20,9 +20,7 @@ Permutation::Permutation(int permutationSize, bool isRandom)
 std::vector <int> Permutation::getPermutation()
 {
 	if (this->permutationIsUpdated == false)
-	{
 		updatePermutation();
-	}
 
 	return this->permutation;
 }
@@ -37,9 +35,7 @@ void Permutation::setPermutation(std::vector <int> permutation)
 std::vector <int> Permutation::getInversionTable()
 {
 	if (this->inversionTableIsUpdated == false)
-	{
 		updateInversionTable();
-	}
 
 	return this->inversionTable;
 }
@@ -114,9 +110,7 @@ void Permutation::merge(std::vector <int>& a, int left, int right)
 	}
 
 	for (int i = 0; i < intervalSize; i++)
-	{
 		a[i + left] = b[i];
-	}
 }
 
 void Permutation::displayData()
@@ -125,14 +119,10 @@ void Permutation::displayData()
 	std::cout << "\nPermutation:\n";
 	auto toPrint = this->getPermutation();
 	for (unsigned i = 0; i < toPrint.size(); i++)
-	{
 		std::cout << std::setw(3) << toPrint[i];
-	}
 	std::cout << "\nInversion Table:\n";
 	toPrint = this->getInversionTable();
 	for (unsigned i = 0; i < toPrint.size(); i++)
-	{
 		std::cout << std::setw(3) << toPrint[i];
-	}
 	std::cout << "\n--------------------\n";
 }
