@@ -115,13 +115,13 @@ void Permutation::merge(std::vector <int>& a, int left, int right)
 
 void Permutation::displayData()
 {
-	std::cout << "\n  Permutation:\n  ";
 	auto toPrint = this->getPermutation();
-	for (unsigned i = 0; i < toPrint.size(); i++)
-		std::cout << std::setw(3) << toPrint[i];
-	std::cout << "\n  Inversion Table:\n  ";
+	std::cout << "\n  " << std::setw(15) << "Indexes:";
+	for (unsigned i = 0; i < toPrint.size(); i++) std::cout << std::setw(3) << i;
+	std::cout << "\n  " << std::setw(15) << "Permutation:";
+	for (auto it : toPrint) std::cout << std::setw(3) << it;
+	std::cout << "\n  " << std::setw(15) << "InversionTable:";
 	toPrint = this->getInversionTable();
-	for (unsigned i = 0; i < toPrint.size(); i++)
-		std::cout << std::setw(3) << toPrint[i];
+	for (auto it : toPrint) std::cout << std::setw(3) << it;
 	std::cout << '\n';
 }
