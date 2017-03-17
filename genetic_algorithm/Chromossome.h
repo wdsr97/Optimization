@@ -4,9 +4,7 @@
 class Chromossome
 {
 public:
-	Chromossome();
-	Chromossome(int genesSize);
-	Chromossome(Permutation genes);
+	Chromossome(int genesSize = 0);
 	Permutation getGenes();
 	void setGenes(Permutation genes);
 	double getFitness();

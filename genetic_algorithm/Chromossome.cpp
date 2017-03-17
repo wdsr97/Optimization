@@ -4,21 +4,9 @@
 #include "Permutation.h"
 #include "Chromossome.h"
 
-Chromossome::Chromossome()
-{
-	this->genes = Permutation(1);
-	this->fitnessIsUpdated = false;
-}
-
 Chromossome::Chromossome(int genesSize)
 {
-	this->genes = Permutation(genesSize);
-	this->fitnessIsUpdated = false;
-}
-
-Chromossome::Chromossome(Permutation genes)
-{
-	this->genes = genes;
+	this->genes = Permutation(genesSize, 1);
 	this->fitnessIsUpdated = false;
 }
 

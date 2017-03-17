@@ -4,8 +4,7 @@
 class Permutation
 {
 public:
-	Permutation();
-	Permutation(int permutationSize);
+	Permutation(int permutationSize = 0, bool isRandom = 0);
 	std::vector <int> getPermutation();
 	void setPermutation(std::vector <int> permutation);
 	std::vector <int> getInversionTable();

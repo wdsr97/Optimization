@@ -2,23 +2,19 @@
 #include <limits>
 #include <iomanip>
 #include <iostream>
+#include "Utility.h"
 #include "Permutation.h"
 
-Permutation::Permutation()
-{
-	this->permutationIsUpdated = false;
-	this->inversionTableIsUpdated = false;
-}
-
-Permutation::Permutation(int permutationSize)
+Permutation::Permutation(int permutationSize, bool isRandom)
 {
 	for (int i = 0; i < permutationSize; i++)
-	{
 		this->permutation.emplace_back(i);
-		this->inversionTable.emplace_back(0);
-	}
+
+	if (isRandom == true)
+		Utility::shuffle(this->permutation);
+
 	this->permutationIsUpdated = true;
-	this->inversionTableIsUpdated = true;
+	this->inversionTableIsUpdated = false;
 }
 
 std::vector <int> Permutation::getPermutation()
