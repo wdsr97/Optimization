@@ -54,12 +54,5 @@ int main()
 		for (int j = 0; j < n; j++)
 			std::cin >> Data::adjacencyMatrix[i][j];
 
-	Chromossome dna(n);
-	dna.displayData();
-	dna.mutate();
-	dna.displayData();
-	dna.mutate();
-	dna.displayData();
-
 	return 0;
 }

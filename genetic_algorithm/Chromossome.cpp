@@ -61,7 +61,6 @@ void Chromossome::updateFitness()
 		int v = permutation[(i + 1) % permutation.size()];
 		this->fitness += Data::adjacencyMatrix[u][v];
 	}
-
 	this->fitnessIsUpdated = true;
 }
 
