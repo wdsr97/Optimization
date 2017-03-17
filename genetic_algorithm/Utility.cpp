@@ -1,4 +1,5 @@
 #include <time.h>
+#include <vector>
 #include "Utility.h"
 
 unsigned long long int Utility::x = time(NULL);
@@ -20,4 +21,22 @@ int Utility::randomIndex(int low, int high)
     }
     int index = (random() % (high - low)) + low;
     return index;
+}
+
+void Utility::swap(int& a, int& b)
+{
+    int tmp = a;
+    a = b;
+    b = tmp;
+}
+
+// https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+void Utility::shuffle(std::vector <int>& a)
+{
+    int n = a.size();
+    for (int i = 0; i < n; i++)
+    {
+        int index = randomIndex(i, n);
+        swap(a[i], a[index]);
+    }
 }
