@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 #include "Utility.h"
 #include "Permutation.h"
-#include "Chromossome.h"
 #include "Data.h"
+#include "Chromossome.h"
 // #include "GeneticAlgorithm.cpp"
 
 class Tester
@@ -47,14 +47,19 @@ int main()
 {
 	int n;
 	std::cin >> n;
-	std::vector <std::vector <int> > matrix(n, std::vector <int>(n));
+	Data::adjacencyMatrix =
+		std::vector <std::vector <int> >(n, std::vector <int>(n));
 
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
-			std::cin >> matrix[i][j];
+			std::cin >> Data::adjacencyMatrix[i][j];
 
-	Data data(matrix);
-	data.displayInfo();
+	Chromossome dna(n);
+	dna.displayData();
+	dna.mutate();
+	dna.displayData();
+	dna.mutate();
+	dna.displayData();
 
 	return 0;
 }

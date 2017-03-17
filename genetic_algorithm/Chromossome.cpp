@@ -3,6 +3,7 @@
 #include "Utility.h"
 #include "Permutation.h"
 #include "Chromossome.h"
+#include "Data.h"
 
 Chromossome::Chromossome(int genesSize)
 {
@@ -54,11 +55,11 @@ void Chromossome::updateFitness()
 {
 	this->fitness = 0;
 	const std::vector <int>& permutation = this->genes.getPermutation();
-	for (unsigned i = 1; i < permutation.size(); i++)
+	for (unsigned i = 0; i < permutation.size(); i++)
 	{
 		int u = permutation[i];
 		int v = permutation[(i + 1) % permutation.size()];
-		// this->fitness += Data::adjacencyMatrix[u][v];
+		this->fitness += Data::adjacencyMatrix[u][v];
 	}
 
 	this->fitnessIsUpdated = true;
@@ -69,6 +70,6 @@ void Chromossome::displayData()
 	// std::cout << "\n--------------------";
 	std::cout << "\nGenes:";
 	this->genes.displayData();
-	// std::cout << this->getFitness() << std::endl;
+	std::cout << this->getFitness() << std::endl;
 	// std::cout << "\n--------------------\n";
 }
