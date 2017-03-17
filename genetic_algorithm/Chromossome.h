@@ -9,7 +9,7 @@ public:
 	void setGenes(Permutation genes);
 	double getFitness();
 	void mutate();
-	void crossover(Chromossome& other);
+	Chromossome crossover(Chromossome& other);
 	void updateFitness();
 	void displayData();
 private:

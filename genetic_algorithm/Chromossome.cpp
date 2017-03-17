@@ -49,7 +49,7 @@ void Chromossome::mutate()
 // n-point crossover
 // To-do:
 // 	Get parentsInversionTable by reference
-void Chromossome::crossover(Chromossome& other)
+Chromossome Chromossome::crossover(Chromossome& other)
 {
 	std::vector <std::vector <int> > parentsInversionTable(2);
 	parentsInversionTable[0] = this->genes.getInversionTable();
@@ -83,13 +83,11 @@ void Chromossome::crossover(Chromossome& other)
 		k ^= 1;
 	}
 
-	if (childInversionTable.size() != parentsInversionTable[0].size())
-	{
-		std::cout << "HEIN HAN\n";
-	}
-
-	this->genes.setInversionTable(childInversionTable);
-	this->fitnessIsUpdated = false;
+	Permutation childPermutation;
+	childPermutation.setInversionTable(childInversionTable);
+	Chromossome child;
+	child.setGenes(childPermutation);
+	return child;
 }
 
 void Chromossome::updateFitness()
