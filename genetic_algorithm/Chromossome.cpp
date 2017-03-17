@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include "Utility.h"
 #include "Permutation.h"
 #include "Chromossome.h"
@@ -45,9 +46,49 @@ void Chromossome::mutate()
 	this->fitnessIsUpdated = false;
 }
 
-void Chromossome::crossover(const Chromossome& other)
+// n-point crossover
+// To-do:
+// 	Get parentsInversionTable by reference
+void Chromossome::crossover(Chromossome& other)
 {
-	// Crossover procedure
+	std::vector <std::vector <int> > parentsInversionTable(2);
+	parentsInversionTable[0] = this->genes.getInversionTable();
+	parentsInversionTable[1] = other.getGenes().getInversionTable();
+
+	std::vector <int> shuffledIndexes(parentsInversionTable[0].size());
+	for (unsigned i = 0; i < shuffledIndexes.size(); i++)
+		shuffledIndexes[i] = i;
+	Utility::shuffle(shuffledIndexes);
+
+	// Isso pode ser setado no inicio do algoritmo
+	int numberOfPoints = 10;
+	if (numberOfPoints > (int)shuffledIndexes.size())
+		numberOfPoints = shuffledIndexes.size();
+
+	std::vector <int> points(numberOfPoints);
+	for (unsigned i = 0; i < points.size(); i++)
+		points[i] = shuffledIndexes[i];
+	std::sort(points.begin(), points.end());
+	points.emplace_back(shuffledIndexes.size());
+
+	int l = 0;
+	int k = 0;
+	std::vector <int> childInversionTable;
+	for (unsigned i = 0; i < points.size(); i++)
+	{
+		int r = points[i];
+		for (int j = l; j < r; j++)
+			childInversionTable.emplace_back(parentsInversionTable[k][j]);
+		l = r;
+		k ^= 1;
+	}
+
+	if (childInversionTable.size() != parentsInversionTable[0].size())
+	{
+		std::cout << "HEIN HAN\n";
+	}
+
+	this->genes.setInversionTable(childInversionTable);
 	this->fitnessIsUpdated = false;
 }
 
@@ -66,9 +107,7 @@ void Chromossome::updateFitness()
 
 void Chromossome::displayData()
 {
-	// std::cout << "\n--------------------";
 	std::cout << "\nGenes:";
 	this->genes.displayData();
-	std::cout << this->getFitness() << std::endl;
-	// std::cout << "\n--------------------\n";
+	std::cout << "Fitness = " << this->getFitness() << std::endl;
 }
