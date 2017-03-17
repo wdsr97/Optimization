@@ -2,22 +2,35 @@
 #include "Permutation.h"
 #include "Chromossome.h"
 
-Chromossome::Chromossome() :
-	fitnessIsUpdated(false)
-{}
+Chromossome::Chromossome()
+{
+	this->fitnessIsUpdated = false;
+}
 
 Chromossome::Chromossome(int genesSize)
 {
 	this->genes = Permutation(genesSize);
+	this->fitnessIsUpdated = false;
 }
 
-Chromossome::Chromossome(Permutation genes) :
-	genes(genes)
-{}
+Chromossome::Chromossome(Permutation genes)
+{
+	this->genes = genes;
+	this->fitnessIsUpdated = false;
+}
 
 void Chromossome::mutate()
 {
-	// Mutate procedure
+	auto inversionTable = this->genes.getInversionTable();
+	int mutationCalls = random(inversionTable.size()); // why?
+	for (int i = 0; i < mutationCalls; i++)
+	{
+		int index = random(inversionTable.size() - 1);
+		int upperBound = inversionTable.size() - index;
+		inversionTable[index] = random(upperBound);
+	}
+
+	this->genes.setInversionTable(inversionTable);
 	this->fitnessIsUpdated = false;
 }
 
