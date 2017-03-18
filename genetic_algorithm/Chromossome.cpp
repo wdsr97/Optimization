@@ -61,11 +61,11 @@ Chromossome Chromossome::crossover(Chromossome& other)
 	Utility::shuffle(shuffledIndexes);
 
 	// Isso pode ser setado no inicio do algoritmo
-	int numberOfPoints = 10;
-	if (numberOfPoints > (int)shuffledIndexes.size())
-		numberOfPoints = shuffledIndexes.size();
+	int pointCount = 10;
+	if (pointCount > (int)shuffledIndexes.size())
+		pointCount = shuffledIndexes.size();
 
-	std::vector <int> points(numberOfPoints);
+	std::vector <int> points(pointCount);
 	for (unsigned i = 0; i < points.size(); i++)
 		points[i] = shuffledIndexes[i];
 	std::sort(points.begin(), points.end());
@@ -83,6 +83,7 @@ Chromossome Chromossome::crossover(Chromossome& other)
 		k ^= 1;
 	}
 
+	// Dá pra otimizar?
 	Permutation childPermutation;
 	childPermutation.setInversionTable(childInversionTable);
 	Chromossome child;
