@@ -1,20 +1,32 @@
 #ifndef GENETICALGORITHM_H
 #define GENETICALGORITHM_H
 
-#include <vector>
-#include "Chromossome.h"
-
 class GeneticAlgorithm
 {
 public:
-	GeneticAlgorithm(double mutation_rate, unsigned population_size);
+	GeneticAlgorithm(
+		int populationSize,
+		int geneSize,
+		double mutationRate,
+		double elitismRate
+	);
+	std::vector <Chromossome> getPopulation();
+	void setPopulation(std::vector <Chromossome> population);
+	Chromossome getBestChromossome();
+	double getMutationRate();
+	void setMutationRate(double mutationRate);
+	double getElitismRate();
+	void setElitismRate(double elitismRate);
 	void newGeneration();
-	int selection();
 	void evaluate();
+	int run(int generationCount)
 private:
+	int select();
 	std::vector <Chromossome> population;
-	Chromossome best_chromossome;
-	double mutation_rate;
+	Chromossome bestChromossome;
+	double mutationRate;
+	double elitismRate;
+	int elitism;
 };
 
 #endif
