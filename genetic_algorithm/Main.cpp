@@ -54,7 +54,22 @@ int main()
 		for (int j = 0; j < n; j++)
 			std::cin >> Data::adjacencyMatrix[i][j];
 
-	GeneticAlgorithm ga(1000, n, 0.03, 0.15);
+	GeneticAlgorithm ga(1000, n, 0.1, 0.15);
+	ga.evaluate();
+	ga.report();
+	double best = ga.getBestChromossome().getFitness();
+	for (int i = 0; i < 1000; i++)
+	{
+		ga.newGeneration();
+		ga.evaluate();
+		double curBest = ga.getBestChromossome().getFitness();
+		if (curBest < best)
+		{
+			best = curBest;
+			std::cout << "Best fitness so far: " << best << std::endl;
+		}
+	}
+	ga.report();
 
 	return 0;
 }
