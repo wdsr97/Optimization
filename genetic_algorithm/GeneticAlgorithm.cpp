@@ -1,6 +1,9 @@
 #include <vector>
 #include <algorithm>
+#include <iostream>
+#include <functional>
 #include "Utility.h"
+#include "Permutation.h"
 #include "Chromossome.h"
 #include "GeneticAlgorithm.h"
 
@@ -13,12 +16,12 @@ GeneticAlgorithm::GeneticAlgorithm(
 {
 	this->mutationRate = mutationRate;
 	this->elitismRate = elitismRate;
-	this->elitism = populationSize * (elitismRate / 100.0);
+	this->elitismCount = populationSize * elitismRate;
 
 	this->population = std::vector <Chromossome>(populationSize);
 	for (unsigned i = 0; i < this->population.size(); i++)
 		this->population[i] = Chromossome(geneSize);
-	std::sort(this->population.begin(), this->population.end());
+	this->sortPopulation();
 }
 
 std::vector <Chromossome> GeneticAlgorithm::getPopulation()
@@ -28,9 +31,9 @@ std::vector <Chromossome> GeneticAlgorithm::getPopulation()
 
 void GeneticAlgorithm::setPopulation(std::vector <Chromossome> population)
 {
-	std::sort(population.begin(), population.end());
 	this->bestChromossome = population[population.size() - 1];
 	this->population = population;
+	this->sortPopulation();
 }
 
 Chromossome GeneticAlgorithm::getBestChromossome()
@@ -60,7 +63,7 @@ void GeneticAlgorithm::setElitismRate(double elitismRate)
 
 int GeneticAlgorithm::select()
 {
-	int bestFitness = 1e9; // A large number
+	double bestFitness = 1e9; // A large number
 	int bestIndex = 0;
 	int k = 2; // tournamentSelection
 
@@ -81,7 +84,7 @@ int GeneticAlgorithm::select()
 void GeneticAlgorithm::newGeneration()
 {
 	std::vector <Chromossome> children;
-	children.assign(this->population.size() - this->elitism, Chromossome());
+	children.assign(this->population.size() - this->elitismCount, Chromossome());
 	for (unsigned i = 0; i < children.size(); i++)
 	{
 		Chromossome& parentA = this->population[this->select()];
@@ -93,7 +96,7 @@ void GeneticAlgorithm::newGeneration()
 			children[i].mutate();
 	}
 
-	std::sort(this->population.begin(), this->population.end());
+	this->sortPopulation();
 	for (unsigned i = 0; i < children.size(); i++)
 		this->population[i] = children[i];
 }
@@ -102,4 +105,23 @@ void GeneticAlgorithm::evaluate()
 {
 	// this->population should always be ordered when get here
 	this->bestChromossome = this->population[this->population.size() - 1];
+}
+
+bool GeneticAlgorithm::ChromossomeCompare(Chromossome& a, Chromossome& b)
+{
+	return a.getFitness() < b.getFitness();
+}
+
+void GeneticAlgorithm::sortPopulation()
+{
+	std::sort(
+		this->population.begin(),
+		this->population.end(),
+		std::bind(
+			&GeneticAlgorithm::ChromossomeCompare,
+			this,
+			std::placeholders::_1,
+			std::placeholders::_2
+		)
+	);
 }

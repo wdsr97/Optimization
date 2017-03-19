@@ -19,14 +19,15 @@ public:
 	void setElitismRate(double elitismRate);
 	void newGeneration();
 	void evaluate();
-	int run(int generationCount)
 private:
+	void sortPopulation();
+	bool ChromossomeCompare(Chromossome& a, Chromossome& b);
 	int select();
 	std::vector <Chromossome> population;
 	Chromossome bestChromossome;
 	double mutationRate;
 	double elitismRate;
-	int elitism;
+	int elitismCount;
 };
 
 #endif
