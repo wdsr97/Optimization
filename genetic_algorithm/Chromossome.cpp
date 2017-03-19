@@ -26,36 +26,36 @@ void Chromossome::setGenes(Permutation genes)
 double Chromossome::getFitness()
 {
 	if (this->fitnessIsUpdated == false)
-		updateFitness();
+		this->updateFitness();
 
 	return this->fitness;
 }
 
 void Chromossome::mutate()
 {
-	auto inversionTable = this->genes.getInversionTable();
-	int mutationCalls = Utility::randomIndex(inversionTable.size()); // why?
+	auto inversion = this->genes.getInversion();
+	int mutationCalls = Utility::randomIndex(inversion.size()); // why?
 	for (int i = 0; i < mutationCalls; i++)
 	{
-		int index = Utility::randomIndex(inversionTable.size() - 1);
-		int upperBound = inversionTable.size() - index;
-		inversionTable[index] = Utility::randomIndex(upperBound);
+		int index = Utility::randomIndex(inversion.size() - 1);
+		int upperBound = inversion.size() - index;
+		inversion[index] = Utility::randomIndex(upperBound);
 	}
 
-	this->genes.setInversionTable(inversionTable);
+	this->genes.setInversion(inversion);
 	this->fitnessIsUpdated = false;
 }
 
 // n-point crossover
 // To-do:
-// 	Get parentsInversionTable by reference
+// 	Get parentsInversion by reference
 Chromossome Chromossome::crossover(Chromossome& other)
 {
-	std::vector <std::vector <int> > parentsInversionTable(2);
-	parentsInversionTable[0] = this->genes.getInversionTable();
-	parentsInversionTable[1] = other.getGenes().getInversionTable();
+	std::vector <std::vector <int> > parentsInversion(2);
+	parentsInversion[0] = this->genes.getInversion();
+	parentsInversion[1] = other.getGenes().getInversion();
 
-	std::vector <int> shuffledIndexes(parentsInversionTable[0].size());
+	std::vector <int> shuffledIndexes(parentsInversion[0].size());
 	for (unsigned i = 0; i < shuffledIndexes.size(); i++)
 		shuffledIndexes[i] = i;
 	Utility::shuffle(shuffledIndexes);
@@ -73,19 +73,19 @@ Chromossome Chromossome::crossover(Chromossome& other)
 
 	int l = 0;
 	int k = 0;
-	std::vector <int> childInversionTable;
+	std::vector <int> childInversion;
 	for (unsigned i = 0; i < points.size(); i++)
 	{
 		int r = points[i];
 		for (int j = l; j < r; j++)
-			childInversionTable.emplace_back(parentsInversionTable[k][j]);
+			childInversion.emplace_back(parentsInversion[k][j]);
 		l = r;
 		k ^= 1;
 	}
 
 	// Dá pra otimizar?
 	Permutation childPermutation;
-	childPermutation.setInversionTable(childInversionTable);
+	childPermutation.setInversion(childInversion);
 	Chromossome child;
 	child.setGenes(childPermutation);
 	return child;

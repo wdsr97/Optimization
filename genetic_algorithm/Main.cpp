@@ -3,7 +3,7 @@
 #include "Permutation.h"
 #include "Data.h"
 #include "Chromossome.h"
-// #include "GeneticAlgorithm.cpp"
+#include "GeneticAlgorithm.h"
 
 class Tester
 {
@@ -20,9 +20,9 @@ public:
 
 	        do {
 	            x.setPermutation(a);
-	            y.setInversionTable(x.getInversionTable());
+	            y.setInversion(x.getInversion());
 	            if (x.getPermutation() != y.getPermutation()) return 0;
-	            all.insert(y.getInversionTable());
+	            all.insert(y.getInversion());
 	        } while (std::next_permutation(a.begin(), a.end()));
 
 	        factorial *= n;
@@ -53,6 +53,8 @@ int main()
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
 			std::cin >> Data::adjacencyMatrix[i][j];
+
+	GeneticAlgorithm ga(1000, n, 0.03, 0.15);
 
 	return 0;
 }

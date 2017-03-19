@@ -14,13 +14,13 @@ Permutation::Permutation(int permutationSize, bool isRandom)
 		Utility::shuffle(this->permutation);
 
 	this->permutationIsUpdated = true;
-	this->inversionTableIsUpdated = false;
+	this->inversionIsUpdated = false;
 }
 
 std::vector <int> Permutation::getPermutation()
 {
 	if (this->permutationIsUpdated == false)
-		updatePermutation();
+		this->updatePermutation();
 
 	return this->permutation;
 }
@@ -29,35 +29,35 @@ void Permutation::setPermutation(std::vector <int> permutation)
 {
 	this->permutation = permutation;
 	this->permutationIsUpdated = true;
-	this->inversionTableIsUpdated = false;
+	this->inversionIsUpdated = false;
 }
 
-std::vector <int> Permutation::getInversionTable()
+std::vector <int> Permutation::getInversion()
 {
-	if (this->inversionTableIsUpdated == false)
-		updateInversionTable();
+	if (this->inversionIsUpdated == false)
+		this->updateInversion();
 
-	return this->inversionTable;
+	return this->inversion;
 }
 
-void Permutation::setInversionTable(std::vector <int> inversionTable)
+void Permutation::setInversion(std::vector <int> inversion)
 {
-	this->inversionTable = inversionTable;
-	this->inversionTableIsUpdated = true;
+	this->inversion = inversion;
+	this->inversionIsUpdated = true;
 	this->permutationIsUpdated = false;
 }
 
 void Permutation::updatePermutation()
 {
-	this->permutation.assign(this->inversionTable.size(), -1);
-	auto inversionTable = this->inversionTable;
+	this->permutation.assign(this->inversion.size(), -1);
+	auto inversion = this->inversion;
 
 	for (unsigned i = 0; i < this->permutation.size(); i++)
 	{
 		int j = 0;
-		while (inversionTable[i] || this->permutation[j] != -1)
+		while (inversion[i] || this->permutation[j] != -1)
 		{
-			inversionTable[i] -= (this->permutation[j] == -1);
+			inversion[i] -= (this->permutation[j] == -1);
 			j++;
 		}
 		this->permutation[j] = i;
@@ -66,12 +66,12 @@ void Permutation::updatePermutation()
 	this->permutationIsUpdated = true;
 }
 
-void Permutation::updateInversionTable()
+void Permutation::updateInversion()
 {
-	this->inversionTable.assign(this->permutation.size(), 0);
+	this->inversion.assign(this->permutation.size(), 0);
 	std::vector <int> a = this->permutation;
-	mergeSort(a, 0, a.size() - 1);
-	this->inversionTableIsUpdated = true;
+	this->mergeSort(a, 0, a.size() - 1);
+	this->inversionIsUpdated = true;
 }
 
 void Permutation::mergeSort(std::vector <int>& a, int left, int right)
@@ -79,9 +79,9 @@ void Permutation::mergeSort(std::vector <int>& a, int left, int right)
 	if (left < right)
 	{
 		int mid = (left + right) / 2;
-		mergeSort(a, left, mid);
-		mergeSort(a, mid + 1, right);
-		merge(a, left, right);
+		this->mergeSort(a, left, mid);
+		this->mergeSort(a, mid + 1, right);
+		this->merge(a, left, right);
 	}
 }
 
@@ -105,7 +105,7 @@ void Permutation::merge(std::vector <int>& a, int left, int right)
 		else
 		{
 			b[k] = a[j++];
-			this->inversionTable[b[k]] += mid - i + 1;
+			this->inversion[b[k]] += mid - i + 1;
 		}
 	}
 
@@ -120,8 +120,8 @@ void Permutation::displayData()
 	for (unsigned i = 0; i < toPrint.size(); i++) std::cout << std::setw(3) << i;
 	std::cout << "\n  " << std::setw(15) << "Permutation:";
 	for (auto it : toPrint) std::cout << std::setw(3) << it;
-	std::cout << "\n  " << std::setw(15) << "InversionTable:";
-	toPrint = this->getInversionTable();
+	std::cout << "\n  " << std::setw(15) << "Inversion:";
+	toPrint = this->getInversion();
 	for (auto it : toPrint) std::cout << std::setw(3) << it;
 	std::cout << '\n';
 }
