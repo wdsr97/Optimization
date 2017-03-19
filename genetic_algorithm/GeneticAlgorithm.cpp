@@ -21,7 +21,7 @@ GeneticAlgorithm::GeneticAlgorithm(
 	this->population = std::vector <Chromossome>(populationSize);
 	for (unsigned i = 0; i < this->population.size(); i++)
 		this->population[i] = Chromossome(geneSize);
-	this->sortPopulation();
+	this->bestChromossome = this->population[0]; // Any element will do
 }
 
 std::vector <Chromossome> GeneticAlgorithm::getPopulation()
@@ -33,7 +33,6 @@ void GeneticAlgorithm::setPopulation(std::vector <Chromossome> population)
 {
 	this->bestChromossome = population[population.size() - 1];
 	this->population = population;
-	this->sortPopulation();
 }
 
 Chromossome GeneticAlgorithm::getBestChromossome()
@@ -103,8 +102,9 @@ void GeneticAlgorithm::newGeneration()
 
 void GeneticAlgorithm::evaluate()
 {
-	// this->population should always be ordered when get here
-	this->bestChromossome = this->population[this->population.size() - 1];
+	for (auto& chromossome : this->population)
+		if (chromossome.getFitness() < this->bestChromossome.getFitness())
+			this->bestChromossome = chromossome;
 }
 
 void GeneticAlgorithm::report()
