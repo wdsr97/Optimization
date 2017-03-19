@@ -107,9 +107,14 @@ void GeneticAlgorithm::evaluate()
 	this->bestChromossome = this->population[this->population.size() - 1];
 }
 
+void GeneticAlgorithm::report()
+{
+	this->bestChromossome.displayData();
+}
+
 bool GeneticAlgorithm::ChromossomeCompare(Chromossome& a, Chromossome& b)
 {
-	return a.getFitness() < b.getFitness();
+	return a.getFitness() > b.getFitness();
 }
 
 void GeneticAlgorithm::sortPopulation()

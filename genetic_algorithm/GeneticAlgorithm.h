@@ -19,6 +19,7 @@ public:
 	void setElitismRate(double elitismRate);
 	void newGeneration();
 	void evaluate();
+	void report();
 private:
 	void sortPopulation();
 	bool ChromossomeCompare(Chromossome& a, Chromossome& b);
