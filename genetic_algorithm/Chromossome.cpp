@@ -34,10 +34,11 @@ double Chromossome::getFitness()
 void Chromossome::mutate()
 {
 	auto inversion = this->genes.getInversion();
-	int mutationCalls = Utility::randomIndex(inversion.size()); // why?
-	for (int i = 0; i < mutationCalls; i++)
+	// int mutationCount = Utility::randomIndex(inversion.size()); // why?
+	int mutationCount = 1;
+	for (int i = 0; i < mutationCount; i++)
 	{
-		int index = Utility::randomIndex(inversion.size() - 1);
+		int index = Utility::randomIndex(1, inversion.size() - 1);
 		int upperBound = inversion.size() - index;
 		inversion[index] = Utility::randomIndex(upperBound);
 	}

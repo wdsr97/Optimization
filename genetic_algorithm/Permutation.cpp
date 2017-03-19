@@ -11,7 +11,7 @@ Permutation::Permutation(int permutationSize, bool isRandom)
 		this->permutation.emplace_back(i);
 
 	if (isRandom == true)
-		Utility::shuffle(this->permutation);
+		Utility::shuffle(this->permutation, 1);
 
 	this->permutationIsUpdated = true;
 	this->inversionIsUpdated = false;
