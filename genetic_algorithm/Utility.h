@@ -10,7 +10,7 @@ public:
     static unsigned long long int random();
     static int randomIndex(int low, int high = -1);
     static void swap(int& a, int& b);
-    static void shuffle(std::vector <int>& a);
+    static void shuffle(std::vector <int>& a, int low = 0, int high = -1);
 private:
     Utility() {}
 };

@@ -31,12 +31,14 @@ void Utility::swap(int& a, int& b)
 }
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-void Utility::shuffle(std::vector <int>& a)
+void Utility::shuffle(std::vector <int>& a, int low, int high)
 {
-    int n = a.size();
-    for (int i = 0; i < n; i++)
+    if (high == -1)
+        high = a.size();
+
+    for (int i = low; i < high; i++)
     {
-        int index = randomIndex(i, n);
+        int index = randomIndex(i, high);
         swap(a[i], a[index]);
     }
 }
