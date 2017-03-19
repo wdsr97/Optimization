@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <functional>
+#include <map>
 #include "Utility.h"
 #include "Permutation.h"
 #include "Chromossome.h"
@@ -107,11 +108,6 @@ void GeneticAlgorithm::evaluate()
 			this->bestChromossome = chromossome;
 }
 
-void GeneticAlgorithm::report()
-{
-	this->bestChromossome.displayData();
-}
-
 bool GeneticAlgorithm::ChromossomeCompare(Chromossome& a, Chromossome& b)
 {
 	return a.getFitness() > b.getFitness();
@@ -129,4 +125,31 @@ void GeneticAlgorithm::sortPopulation()
 			std::placeholders::_2
 		)
 	);
+
+	int cnt = 0;
+	for (unsigned i = 1; i < this->population.size(); i++)
+	{
+		auto u = this->population[i - 1].getGenes().getPermutation();
+		auto v = this->population[i].getGenes().getPermutation();
+		if (u == v) {
+			cnt++;
+		} else {
+			if (cnt) {
+				auto f = this->population[i - 1].getFitness();
+				std::cout << cnt << ' ' << f << std::endl;
+			}
+			cnt = 0;
+		}
+	}
+	std::cout << cnt << ' ' << this->population[this->population.size() - 1].getFitness();
+	std::cout << "\n-/-/-/-/\n";
+}
+
+void GeneticAlgorithm::report()
+{
+	auto permutation = this->bestChromossome.getGenes().getPermutation();
+	auto fitness = this->bestChromossome.getFitness();
+	for (auto number : permutation)
+		std::cout << number << ' ';
+	std::cout << '\n' << fitness << '\n';
 }

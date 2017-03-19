@@ -31,22 +31,6 @@ double Chromossome::getFitness()
 	return this->fitness;
 }
 
-void Chromossome::mutate()
-{
-	auto inversion = this->genes.getInversion();
-	// int mutationCount = Utility::randomIndex(inversion.size()); // why?
-	int mutationCount = 1;
-	for (int i = 0; i < mutationCount; i++)
-	{
-		int index = Utility::randomIndex(1, inversion.size() - 1);
-		int upperBound = inversion.size() - index;
-		inversion[index] = Utility::randomIndex(upperBound);
-	}
-
-	this->genes.setInversion(inversion);
-	this->fitnessIsUpdated = false;
-}
-
 // n-point crossover
 // To-do:
 // 	Get parentsInversion by reference
@@ -90,6 +74,22 @@ Chromossome Chromossome::crossover(Chromossome& other)
 	Chromossome child;
 	child.setGenes(childPermutation);
 	return child;
+}
+
+void Chromossome::mutate()
+{
+	auto inversion = this->genes.getInversion();
+	// int mutationCount = Utility::randomIndex(inversion.size()); // why?
+	int mutationCount = 1;
+	for (int i = 0; i < mutationCount; i++)
+	{
+		int index = Utility::randomIndex(1, inversion.size() - 1);
+		int upperBound = inversion.size() - index;
+		inversion[index] = Utility::randomIndex(upperBound);
+	}
+
+	this->genes.setInversion(inversion);
+	this->fitnessIsUpdated = false;
 }
 
 void Chromossome::updateFitness()
