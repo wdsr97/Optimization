@@ -4,7 +4,7 @@
 #include "Data.h"
 #include "Chromossome.h"
 #include "GeneticAlgorithm.h"
-
+//test
 class Tester
 {
 public:
