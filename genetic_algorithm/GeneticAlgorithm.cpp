@@ -136,20 +136,18 @@ void GeneticAlgorithm::sortPopulation()
 		} else {
 			if (cnt) {
 				auto f = this->population[i - 1].getFitness();
-				std::cout << cnt << ' ' << f << std::endl;
 			}
 			cnt = 0;
 		}
 	}
-	std::cout << cnt << ' ' << this->population[this->population.size() - 1].getFitness();
-	std::cout << "\n-/-/-/-/\n";
 }
 
 void GeneticAlgorithm::report()
 {
 	auto permutation = this->bestChromossome.getGenes().getPermutation();
 	auto fitness = this->bestChromossome.getFitness();
+    std::cout << "Path =";
 	for (auto number : permutation)
-		std::cout << number << ' ';
-	std::cout << '\n' << fitness << '\n';
+		std::cout << ' ' << number;
+	std::cout << '\n' << "Fitness = " << fitness << '\n';
 }

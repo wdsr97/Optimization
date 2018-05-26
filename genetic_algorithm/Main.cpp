@@ -4,44 +4,12 @@
 #include "Data.h"
 #include "Chromossome.h"
 #include "GeneticAlgorithm.h"
-//test
-class Tester
-{
-public:
-	static bool testPermutation()
-	{
-		int factorial = 1;
-	    for (int n = 1; n < 9; n++)
-	    {
-	        std::vector <int> a(n);
-	        for (int i = 0; i < n; i++) a[i] = i;
-	        std::set <std::vector <int> > all;
-	        Permutation x(n), y(n);
 
-	        do {
-	            x.setPermutation(a);
-	            y.setInversion(x.getInversion());
-	            if (x.getPermutation() != y.getPermutation()) return 0;
-	            all.insert(y.getInversion());
-	        } while (std::next_permutation(a.begin(), a.end()));
-
-	        factorial *= n;
-	        if ((int)all.size() != factorial) return 0;
-	    }
-	    return 1;
-	}
-
-	static void testRNG()
-	{
-		std::cout << '\n';
-		for (int i = 0; i < 10; i++)
-			std::cout << Utility::random() << '\n';
-		std::cout << '\n';
-		for (int i = 0; i < 10; i++)
-			std::cout << Utility::randomIndex(i, i + 10) << '\n';
-		std::cout << '\n';
-	}
-};
+#define MAX_ITER 2
+#define POP_SIZE 1000
+#define MUT_RATE 0.07
+#define ELIT_RATE 0.15
+#define MAX_GEN 200
 
 int main()
 {
@@ -54,13 +22,13 @@ int main()
 		for (int j = 0; j < n; j++)
 			std::cin >> Data::adjacencyMatrix[i][j];
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < MAX_ITER; i++)
 	{
-		GeneticAlgorithm ga(1000, n, 0.07, 0.15);
+        std::cout << "Iteration " << i+1 << ":\n";
+		GeneticAlgorithm ga(POP_SIZE, n, MUT_RATE, ELIT_RATE);
 		ga.evaluate();
 		double best = ga.getBestChromossome().getFitness();
-		for (int t = 0; t < 200; t++)
-		{
+		for (int t = 0; t < MAX_GEN; t++) {
 			ga.newGeneration();
 			ga.evaluate();
 			double curBest = ga.getBestChromossome().getFitness();
@@ -71,6 +39,7 @@ int main()
 			}
 		}
 		ga.report();
+        std::cout << std::endl;
 	}
 
 
