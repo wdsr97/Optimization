@@ -18,10 +18,11 @@ int main()
 	Data::adjacencyMatrix =
 		std::vector <std::vector <int> >(n, std::vector <int>(n));
 
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
+	for (int i = 0; i < n; i++){
+		for (int j = 0; j < n; j++){
 			std::cin >> Data::adjacencyMatrix[i][j];
-
+		}
+	}
 	for (int i = 0; i < MAX_ITER; i++)
 	{
         std::cout << "Iteration " << i+1 << ":\n";
