@@ -13,7 +13,7 @@ GeneticAlgorithm::GeneticAlgorithm(
 		int geneSize,
 		double mutationRate,
 		double elitismRate
-	)
+)
 {
 	this->mutationRate = mutationRate;
 	this->elitismRate = elitismRate;
@@ -21,8 +21,10 @@ GeneticAlgorithm::GeneticAlgorithm(
 
 	this->population = std::vector <Chromossome>(populationSize);
 	for (unsigned i = 0; i < this->population.size(); i++)
+	{
 		this->population[i] = Chromossome(geneSize);
-	this->bestChromossome = this->population[0]; // Any element will do
+		this->bestChromossome = this->population[0]; // Any element will do
+	}
 }
 
 std::vector <Chromossome> GeneticAlgorithm::getPopulation()
@@ -66,7 +68,7 @@ int GeneticAlgorithm::select()
 	double bestFitness = 1e9; // A large number
 	int bestIndex = 0;
 	int k = 2; // tournamentSelection
-
+	
 	for (int i = 0; i < k; i++)
 	{
 		int index = Utility::randomIndex(this->population.size());
@@ -90,22 +92,29 @@ void GeneticAlgorithm::newGeneration()
 		Chromossome& parentA = this->population[this->select()];
 		Chromossome& parentB = this->population[this->select()];
 		children[i] = parentA.crossover(parentB);
-
 		double randomValue = Utility::randomIndex((int)1e6 + 1) / 1e6;
 		if (randomValue <= this->mutationRate)
+		{
 			children[i].mutate();
+		}
 	}
 
 	this->sortPopulation();
 	for (unsigned i = 0; i < children.size(); i++)
+	{
 		this->population[i] = children[i];
+	}
 }
 
 void GeneticAlgorithm::evaluate()
 {
 	for (auto& chromossome : this->population)
+	{
 		if (chromossome.getFitness() < this->bestChromossome.getFitness())
+		{
 			this->bestChromossome = chromossome;
+		}
+	}
 }
 
 bool GeneticAlgorithm::ChromossomeCompare(Chromossome& a, Chromossome& b)
@@ -131,10 +140,14 @@ void GeneticAlgorithm::sortPopulation()
 	{
 		auto u = this->population[i - 1].getGenes().getPermutation();
 		auto v = this->population[i].getGenes().getPermutation();
-		if (u == v) {
+		if (u == v)
+		{
 			cnt++;
-		} else {
-			if (cnt) {
+		} 
+		else 
+		{
+			if (cnt) 
+			{
 				auto f = this->population[i - 1].getFitness();
 			}
 			cnt = 0;
