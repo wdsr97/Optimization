@@ -3,7 +3,7 @@
 
 class Chromossome
 {
-public:
+  public:
 	Chromossome(int genesSize = 0);
 	Permutation getGenes();
 	void setGenes(Permutation genes);
@@ -12,7 +12,8 @@ public:
 	Chromossome crossover(Chromossome& other);
 	void updateFitness();
 	void displayData();
-private:
+
+  private:
 	Permutation genes;
 	double fitness;
 	bool fitnessIsUpdated;

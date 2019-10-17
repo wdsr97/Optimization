@@ -28,7 +28,8 @@ int main()
 		GeneticAlgorithm ga(POP_SIZE, n, MUT_RATE, ELIT_RATE);
 		ga.evaluate();
 		double best = ga.getBestChromossome().getFitness();
-		for (int t = 0; t < MAX_GEN; t++) {
+		for (int t = 0; t < MAX_GEN; t++) 
+		{
 			ga.newGeneration();
 			ga.evaluate();
 			double curBest = ga.getBestChromossome().getFitness();
