@@ -4,19 +4,19 @@
 class Chromossome
 {
   public:
-	Chromossome(int genesSize = 0);
-	Permutation getGenes();
-	void setGenes(Permutation genes);
-	double getFitness();
-	void mutate();
-	Chromossome crossover(Chromossome& other);
-	void updateFitness();
-	void displayData();
+    Chromossome(int genesSize = 0);
+    Permutation getGenes();
+    void setGenes(Permutation genes);
+    double getFitness();
+    void mutate();
+    Chromossome crossover(Chromossome &other);
+    void updateFitness();
+    void displayData();
 
   private:
-	Permutation genes;
-	double fitness;
-	bool fitnessIsUpdated;
+    Permutation genes;
+    double fitness;
+    bool fitnessIsUpdated;
 };
 
 #endif
