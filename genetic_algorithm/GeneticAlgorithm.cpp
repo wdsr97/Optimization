@@ -9,145 +9,145 @@
 #include "GeneticAlgorithm.h"
 
 GeneticAlgorithm::GeneticAlgorithm(
-		int populationSize,
-		int geneSize,
-		double mutationRate,
-		double elitismRate
-	)
+        int populationSize,
+        int geneSize,
+        double mutationRate,
+        double elitismRate
+    )
 {
-	this->mutationRate = mutationRate;
-	this->elitismRate = elitismRate;
-	this->elitismCount = populationSize * elitismRate;
+    this->mutationRate = mutationRate;
+    this->elitismRate = elitismRate;
+    this->elitismCount = populationSize * elitismRate;
 
-	this->population = std::vector <Chromossome>(populationSize);
-	for (unsigned i = 0; i < this->population.size(); i++)
-		this->population[i] = Chromossome(geneSize);
-	this->bestChromossome = this->population[0]; // Any element will do
+    this->population = std::vector <Chromossome>(populationSize);
+    for (unsigned i = 0; i < this->population.size(); i++)
+        this->population[i] = Chromossome(geneSize);
+    this->bestChromossome = this->population[0]; // Any element will do
 }
 
 std::vector <Chromossome> GeneticAlgorithm::getPopulation()
 {
-	return this->population;
+    return this->population;
 }
 
 void GeneticAlgorithm::setPopulation(std::vector <Chromossome> population)
 {
-	this->bestChromossome = population[population.size() - 1];
-	this->population = population;
+    this->bestChromossome = population[population.size() - 1];
+    this->population = population;
 }
 
 Chromossome GeneticAlgorithm::getBestChromossome()
 {
-	return this->bestChromossome;
+    return this->bestChromossome;
 }
 
 double GeneticAlgorithm::getMutationRate()
 {
-	return this->mutationRate;
+    return this->mutationRate;
 }
 
 void GeneticAlgorithm::setMutationRate(double mutationRate)
 {
-	this->mutationRate = mutationRate;
+    this->mutationRate = mutationRate;
 }
 
 double GeneticAlgorithm::getElitismRate()
 {
-	return this->elitismRate;
+    return this->elitismRate;
 }
 
 void GeneticAlgorithm::setElitismRate(double elitismRate)
 {
-	this->elitismRate = elitismRate;
+    this->elitismRate = elitismRate;
 }
 
 int GeneticAlgorithm::select()
 {
-	double bestFitness = 1e9; // A large number
-	int bestIndex = 0;
-	int k = 2; // tournamentSelection
+    double bestFitness = 1e9; // A large number
+    int bestIndex = 0;
+    int k = 2; // tournamentSelection
 
-	for (int i = 0; i < k; i++)
-	{
-		int index = Utility::randomIndex(this->population.size());
-		Chromossome& selected = this->population[index];
+    for (int i = 0; i < k; i++)
+    {
+        int index = Utility::randomIndex(this->population.size());
+        Chromossome& selected = this->population[index];
 
-		if (selected.getFitness() < bestFitness)
-		{
-			bestFitness = selected.getFitness();
-			bestIndex = index;
-		}
-	}
-	return bestIndex;
+        if (selected.getFitness() < bestFitness)
+        {
+            bestFitness = selected.getFitness();
+            bestIndex = index;
+        }
+    }
+    return bestIndex;
 }
 
 void GeneticAlgorithm::newGeneration()
 {
-	std::vector <Chromossome> children;
-	children.assign(this->population.size() - this->elitismCount, Chromossome());
-	for (unsigned i = 0; i < children.size(); i++)
-	{
-		Chromossome& parentA = this->population[this->select()];
-		Chromossome& parentB = this->population[this->select()];
-		children[i] = parentA.crossover(parentB);
+    std::vector <Chromossome> children;
+    children.assign(this->population.size() - this->elitismCount, Chromossome());
+    for (unsigned i = 0; i < children.size(); i++)
+    {
+        Chromossome& parentA = this->population[this->select()];
+        Chromossome& parentB = this->population[this->select()];
+        children[i] = parentA.crossover(parentB);
 
-		double randomValue = Utility::randomIndex((int)1e6 + 1) / 1e6;
-		if (randomValue <= this->mutationRate)
-			children[i].mutate();
-	}
+        double randomValue = Utility::randomIndex((int)1e6 + 1) / 1e6;
+        if (randomValue <= this->mutationRate)
+            children[i].mutate();
+    }
 
-	this->sortPopulation();
-	for (unsigned i = 0; i < children.size(); i++)
-		this->population[i] = children[i];
+    this->sortPopulation();
+    for (unsigned i = 0; i < children.size(); i++)
+        this->population[i] = children[i];
 }
 
 void GeneticAlgorithm::evaluate()
 {
-	for (auto& chromossome : this->population)
-		if (chromossome.getFitness() < this->bestChromossome.getFitness())
-			this->bestChromossome = chromossome;
+    for (auto& chromossome : this->population)
+        if (chromossome.getFitness() < this->bestChromossome.getFitness())
+            this->bestChromossome = chromossome;
 }
 
 bool GeneticAlgorithm::ChromossomeCompare(Chromossome& a, Chromossome& b)
 {
-	return a.getFitness() > b.getFitness();
+    return a.getFitness() > b.getFitness();
 }
 
 void GeneticAlgorithm::sortPopulation()
 {
-	std::sort(
-		this->population.begin(),
-		this->population.end(),
-		std::bind(
-			&GeneticAlgorithm::ChromossomeCompare,
-			this,
-			std::placeholders::_1,
-			std::placeholders::_2
-		)
-	);
+    std::sort(
+        this->population.begin(),
+        this->population.end(),
+        std::bind(
+            &GeneticAlgorithm::ChromossomeCompare,
+            this,
+            std::placeholders::_1,
+            std::placeholders::_2
+        )
+    );
 
-	int cnt = 0;
-	for (unsigned i = 1; i < this->population.size(); i++)
-	{
-		auto u = this->population[i - 1].getGenes().getPermutation();
-		auto v = this->population[i].getGenes().getPermutation();
-		if (u == v) {
-			cnt++;
-		} else {
-			if (cnt) {
-				auto f = this->population[i - 1].getFitness();
-			}
-			cnt = 0;
-		}
-	}
+    int cnt = 0;
+    for (unsigned i = 1; i < this->population.size(); i++)
+    {
+        auto u = this->population[i - 1].getGenes().getPermutation();
+        auto v = this->population[i].getGenes().getPermutation();
+        if (u == v) {
+            cnt++;
+        } else {
+            if (cnt) {
+                auto f = this->population[i - 1].getFitness();
+            }
+            cnt = 0;
+        }
+    }
 }
 
 void GeneticAlgorithm::report()
 {
-	auto permutation = this->bestChromossome.getGenes().getPermutation();
-	auto fitness = this->bestChromossome.getFitness();
+    auto permutation = this->bestChromossome.getGenes().getPermutation();
+    auto fitness = this->bestChromossome.getFitness();
     std::cout << "Path =";
-	for (auto number : permutation)
-		std::cout << ' ' << number;
-	std::cout << '\n' << "Fitness = " << fitness << '\n';
+    for (auto number : permutation)
+        std::cout << ' ' << number;
+    std::cout << '\n' << "Fitness = " << fitness << '\n';
 }
