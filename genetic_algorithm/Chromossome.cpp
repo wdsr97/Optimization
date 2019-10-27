@@ -26,7 +26,9 @@ void Chromossome::setGenes(Permutation genes)
 double Chromossome::getFitness()
 {
     if (this->fitnessIsUpdated == false)
+    {
         this->updateFitness();
+    }
 
     return this->fitness;
 }
@@ -42,17 +44,23 @@ Chromossome Chromossome::crossover(Chromossome& other)
 
     std::vector <int> shuffledIndexes(parentsInversion[0].size());
     for (unsigned i = 0; i < shuffledIndexes.size(); i++)
+    {
         shuffledIndexes[i] = i;
+    }
     Utility::shuffle(shuffledIndexes);
 
     // Isso pode ser setado no inicio do algoritmo
     int pointCount = 10;
     if (pointCount > (int)shuffledIndexes.size())
+    {
         pointCount = shuffledIndexes.size();
+    }
 
     std::vector <int> points(pointCount);
     for (unsigned i = 0; i < points.size(); i++)
+    {
         points[i] = shuffledIndexes[i];
+    }
     std::sort(points.begin(), points.end());
     points.emplace_back(shuffledIndexes.size());
 
@@ -63,7 +71,9 @@ Chromossome Chromossome::crossover(Chromossome& other)
     {
         int r = points[i];
         for (int j = l; j < r; j++)
+        {
             childInversion.emplace_back(parentsInversion[k][j]);
+        }
         l = r;
         k ^= 1;
     }

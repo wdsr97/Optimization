@@ -33,8 +33,12 @@ int main(int argc, char *argv[])
         std::vector <std::vector <int> >(n, std::vector <int>(n));
 
     for (int i = 0; i < n; i++)
+    {
         for (int j = 0; j < n; j++)
+        {
             std::cin >> Data::adjacencyMatrix[i][j];
+        }            
+    }        
 
     for (int i = 0; i < max_iter; i++)
     {
