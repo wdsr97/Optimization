@@ -21,7 +21,9 @@ GeneticAlgorithm::GeneticAlgorithm(
 
     this->population = std::vector <Chromossome>(populationSize);
     for (unsigned i = 0; i < this->population.size(); i++)
+    {
         this->population[i] = Chromossome(geneSize);
+    }
     this->bestChromossome = this->population[0]; // Any element will do
 }
 
@@ -93,19 +95,27 @@ void GeneticAlgorithm::newGeneration()
 
         double randomValue = Utility::randomIndex((int)1e6 + 1) / 1e6;
         if (randomValue <= this->mutationRate)
+        {
             children[i].mutate();
+        }
     }
 
     this->sortPopulation();
     for (unsigned i = 0; i < children.size(); i++)
+    {
         this->population[i] = children[i];
+    }
 }
 
 void GeneticAlgorithm::evaluate()
 {
     for (auto& chromossome : this->population)
+    {
         if (chromossome.getFitness() < this->bestChromossome.getFitness())
+        {
             this->bestChromossome = chromossome;
+        }
+    }
 }
 
 bool GeneticAlgorithm::ChromossomeCompare(Chromossome& a, Chromossome& b)
@@ -148,6 +158,8 @@ void GeneticAlgorithm::report()
     auto fitness = this->bestChromossome.getFitness();
     std::cout << "Path =";
     for (auto number : permutation)
+    {
         std::cout << ' ' << number;
+    }
     std::cout << '\n' << "Fitness = " << fitness << '\n';
 }
