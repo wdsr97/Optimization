@@ -8,11 +8,13 @@
 Permutation::Permutation(int permutationSize, bool isRandom)
 {
     for (int i = 0; i < permutationSize; i++)
+    {
         this->permutation.emplace_back(i);
-
+    }
     if (isRandom == true)
+    {
         Utility::shuffle(this->permutation, 1);
-
+    }
     this->permutationIsUpdated = true;
     this->inversionIsUpdated = false;
 }
@@ -20,8 +22,9 @@ Permutation::Permutation(int permutationSize, bool isRandom)
 std::vector <int> Permutation::getPermutation()
 {
     if (this->permutationIsUpdated == false)
+    {
         this->updatePermutation();
-
+    }
     return this->permutation;
 }
 
@@ -35,8 +38,9 @@ void Permutation::setPermutation(std::vector <int> permutation)
 std::vector <int> Permutation::getInversion()
 {
     if (this->inversionIsUpdated == false)
+    {
         this->updateInversion();
-
+    }
     return this->inversion;
 }
 
@@ -110,18 +114,28 @@ void Permutation::merge(std::vector <int>& a, int left, int right)
     }
 
     for (int i = 0; i < intervalSize; i++)
+    {
         a[i + left] = b[i];
+    }
 }
-
 void Permutation::displayData()
 {
     auto toPrint = this->getPermutation();
     std::cout << "\n  " << std::setw(13) << "Indexes:";
-    for (unsigned i = 0; i < toPrint.size(); i++) std::cout << std::setw(3) << i;
+    for (unsigned i = 0; i < toPrint.size(); i++)
+    {
+     std::cout << std::setw(3) << i;
+    }
     std::cout << "\n  " << std::setw(13) << "Permutation:";
-    for (auto it : toPrint) std::cout << std::setw(3) << it;
+    for (auto it : toPrint)
+    {
+     std::cout << std::setw(3) << it;
+    }
     std::cout << "\n  " << std::setw(13) << "Inversion:";
     toPrint = this->getInversion();
-    for (auto it : toPrint) std::cout << std::setw(3) << it;
+    for (auto it : toPrint)
+    {
+     std::cout << std::setw(3) << it;
+    }
     std::cout << '\n';
 }

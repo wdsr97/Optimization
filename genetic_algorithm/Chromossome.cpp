@@ -42,17 +42,22 @@ Chromossome Chromossome::crossover(Chromossome& other)
 
     std::vector <int> shuffledIndexes(parentsInversion[0].size());
     for (unsigned i = 0; i < shuffledIndexes.size(); i++)
+    {
         shuffledIndexes[i] = i;
+    }
     Utility::shuffle(shuffledIndexes);
 
     // Isso pode ser setado no inicio do algoritmo
     int pointCount = 10;
-    if (pointCount > (int)shuffledIndexes.size())
+    if (pointCount > (int)shuffledIndexes.size()
+    {
         pointCount = shuffledIndexes.size();
-
+    }
     std::vector <int> points(pointCount);
     for (unsigned i = 0; i < points.size(); i++)
+    {
         points[i] = shuffledIndexes[i];
+    }
     std::sort(points.begin(), points.end());
     points.emplace_back(shuffledIndexes.size());
 

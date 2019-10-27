@@ -34,8 +34,9 @@ void Utility::swap(int& a, int& b)
 void Utility::shuffle(std::vector <int>& a, int low, int high)
 {
     if (high == -1)
+    {
         high = a.size();
-
+    }
     for (int i = low; i < high; i++)
     {
         int index = randomIndex(i, high);
