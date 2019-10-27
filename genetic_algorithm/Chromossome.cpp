@@ -49,7 +49,7 @@ Chromossome Chromossome::crossover(Chromossome& other)
 
     // Isso pode ser setado no inicio do algoritmo
     int pointCount = 10;
-    if (pointCount > (int)shuffledIndexes.size()
+    if (pointCount > (int)shuffledIndexes.size())
     {
         pointCount = shuffledIndexes.size();
     }
